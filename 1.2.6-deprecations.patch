@@ -1,10 +1,22 @@
 --- origsrc/goocanvas-1.2.6/lib/goocanvas.rb	2013-08-05 05:28:17.371722700 -0500
 +++ src/goocanvas-1.2.6/lib/goocanvas.rb	2013-08-05 05:28:39.266975000 -0500
-@@ -4,7 +4,6 @@ require 'cairo'
+@@ -4,7 +4,7 @@ require 'cairo'
  base_dir = Pathname.new(__FILE__).dirname.dirname.expand_path
  vendor_dir = base_dir + "vendor" + "local"
  vendor_bin_dir = vendor_dir + "bin"
 -GLib.prepend_environment_path(vendor_bin_dir)
++GLib.prepend_dll_path(vendor_bin_dir)
  begin
    major, minor, micro, = RUBY_VERSION.split(/\./)
    require "#{major}.#{minor}/goocanvas.so"
+--- origsrc/goocanvas-1.2.6/sample/goocanvas-gi.rb	2015-05-20 11:17:04.628313300 -0500
++++ src/goocanvas-1.2.6/sample/goocanvas-gi.rb	2015-05-20 11:17:24.013274800 -0500
+@@ -20,7 +20,7 @@ require "gobject-introspection"
+ base_dir = Pathname.new(__FILE__).dirname.dirname.dirname.expand_path
+ vendor_dir = base_dir + "vendor" + "local"
+ vendor_bin_dir = vendor_dir + "bin"
+-GLib.prepend_environment_path(vendor_bin_dir)
++GLib.prepend_dll_path(vendor_bin_dir)
+ 
+ module Goo
+   LOG_DOMAIN = "GooCanvas"
