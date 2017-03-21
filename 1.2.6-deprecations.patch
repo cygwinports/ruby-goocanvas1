@@ -1,3 +1,35 @@
+--- origsrc/goocanvas-1.2.6/ext/goocanvas/extconf.rb	2017-03-19 21:52:32.924756700 -0500
++++ src/goocanvas-1.2.6/ext/goocanvas/extconf.rb	2017-03-19 22:06:18.963494000 -0500
+@@ -30,7 +30,7 @@ rescue LoadError
+   require 'mkmf-gnome2'
+ end
+ 
+-["glib2", "atk", "pango", "gdk_pixbuf2", "gtk2"].each do |package|
++["glib2", "atk", "pango", "gtk2"].each do |package|
+   directory = "#{package}#{version_suffix}"
+   build_dir = "#{directory}/tmp/#{RUBY_PLATFORM}/#{package}/#{RUBY_VERSION}"
+   add_depend_package(package, "#{directory}/ext/#{package}",
+--- origsrc/goocanvas-1.2.6/ext/goocanvas/rbgoocanvasimage.c	2017-03-19 21:52:32.956001000 -0500
++++ src/goocanvas-1.2.6/ext/goocanvas/rbgoocanvasimage.c	2017-03-19 22:10:01.017706500 -0500
+@@ -29,7 +29,7 @@ rg_initialize(VALUE self, VALUE parent,
+ {
+     GooCanvasItem *item;
+     item = goo_canvas_image_new(RVAL2GOOCANVASITEM(parent),
+-                                RVAL2GDKPIXBUF(pixbuf),
++                                GDK_PIXBUF(RVAL2GOBJ(pixbuf)),
+                                 NUM2DBL(x),
+                                 NUM2DBL(y),
+                                 NULL);
+--- origsrc/goocanvas-1.2.6/ext/goocanvas/rbgoocanvasprivate.h	2017-03-19 21:52:32.956001000 -0500
++++ src/goocanvas-1.2.6/ext/goocanvas/rbgoocanvasprivate.h	2017-03-19 22:08:24.425967900 -0500
+@@ -21,7 +21,6 @@
+ #ifndef __RBGOOCANVASPRIVATE_H__
+ #define __RBGOOCANVASPRIVATE_H__
+ 
+-#include <rbgdk-pixbuf.h>
+ #include "rbgoocanvas.h"
+ 
+ #ifndef G_VALUE_INIT
 --- origsrc/goocanvas-1.2.6/lib/goocanvas.rb	2013-08-05 05:28:17.371722700 -0500
 +++ src/goocanvas-1.2.6/lib/goocanvas.rb	2013-08-05 05:28:39.266975000 -0500
 @@ -4,7 +4,7 @@ require 'cairo'
